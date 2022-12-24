@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="v01" author="NhatPA" context="create table">
+        <sql>
+            CREATE TABLE level
+            (
+                id   BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                name VARCHAR(255) NULL
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="v02" author="NhatPA" context="add column code">
+        <addColumn tableName="level">
+            <column name="code" type="int4"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

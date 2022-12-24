@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="v01" author="NhatPA" context="create table">
+        <sql>
+            CREATE TABLE `order`
+            (
+                id      BIGINT AUTO_INCREMENT NOT NULL,
+                user_id BIGINT NOT NULL,
+                CONSTRAINT pk_order PRIMARY KEY (id)
+            );
+
+            ALTER TABLE `order`
+                ADD CONSTRAINT FK_ORDER_ON_USER FOREIGN KEY (user_id) REFERENCES user (id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="v02" author="NhatPA" context="add column price">
+        <addColumn tableName="order">
+            <column name="price" type="currency"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
