@@ -1,0 +1,60 @@
+version: '2.6'
+
+services:
+  notification:
+    container_name: manager_notification
+    # Path to dockerfile.
+    # '.' represents the current directory in which
+    # docker-compose.yml is present.
+    build: ../notification-service
+    restart: always
+    # Mapping of container port to host
+    ports:
+      - "8081:8081"
+    networks:
+      - api-doc-microservices
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+        tag: "{{.Name}}"
+
+  api-docs:
+    container_name: manager_api-docs
+    build: ../api-document-service
+    depends_on:
+      - notification
+    restart: always
+    ports:
+      - "8014:8014"
+    networks:
+      - api-doc-microservices
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+        tag: "{{.Name}}"
+
+#  auth:
+#    container_name: manager_auth
+#    build: ../auth-service
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - api-doc-microservices
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "50m"
+#        max-file: "5"
+#        tag: "{{.Name}}"
+
+networks:
+  api-doc-microservices:
+    driver: bridge
+
+# docker-compose -p api-docs-microservices up -d
+# docker-compose down --rmi local
